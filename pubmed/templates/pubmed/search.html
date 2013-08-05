@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <title>{{ term }}</title>
+    </head>
+    <body>
+        <h1>Search results for {{ term }}</h1>
+        {% autoescape off %}
+        {{ body }}
+        {% endautoescape %}
+    </body>
+</html>
+

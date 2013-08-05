@@ -1,0 +1,13 @@
+<html>
+    <head>
+        {% autoescape off %}
+        {{ head }}
+        {% endautoescape %}        
+    </head>
+    <body>
+        <h1>Content of {{ title }}</h1>
+        {% autoescape off %}
+        {{ body }}
+        {% endautoescape %}
+    </body>
+</html>
