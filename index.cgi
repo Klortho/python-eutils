@@ -62,7 +62,7 @@ def run_with_cgi(application):
             result.close()
 
 # Change this to the directory above your site code.
-sys.path.append("/web/public/htdocs/staff/misiurev/dncbi")
+#sys.path.append("/web/public/htdocs/staff/misiurev/dncbi")
 
 # Change mysite to the name of your site package
 os.environ['DJANGO_SETTINGS_MODULE'] = 'dncbi.settings'

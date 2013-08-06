@@ -8,18 +8,25 @@ from backend.search import *
 from backend.docsum import *
 
 def dispatch(request):
-    if (request.GET.get('term') == ''):
-        return redirect("http://iwebdev2/staff/misiurev/dncbi/index.cgi/pubmed/")
+    term = request.GET.get('term', '__null__')
+
+    # Term present but is empty    
+    if (term == ''):
+        # Redirect to home page
+        return redirect(request.path)
     
-    if (request.GET.get('term') != 'None'):
+    # Term present and is not empty
+    if (term != '__null__'):
+        # Run search
         return dosearch(request)
 
+    # Show landing page
     return home(request)
         
         
 def home(request):
-    backend = cms("pmh")
-    page = backend.get("about")
+    backend = cms("paf-dev")
+    page = backend.get("beer")
     
     if (page.status_code != 200):
         return HttpResponseNotFound("<h1>Page "+page.url+" not found</h1>")
