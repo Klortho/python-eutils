@@ -18,7 +18,7 @@ def dispatch(request):
     # Term present and is not empty
     if (term != '__null__'):
         # Run search
-        return dosearch(request)
+        return dosearch(term)
 
     # Show landing page
     return home(request)
@@ -34,9 +34,9 @@ def home(request):
     return render_to_response("pubmed/index.html", { "title": page.title, "head": page.head, "body": page.body })
 
 
-def dosearch(request):
+def dosearch(term):
     backend = search('pubmed');
-    response = backend.request('cat', { "groupBy": "PubDate" });
+    response = backend.request(term, { "groupBy": "PubDate" });
     
     docs = docsum('pubmed');
     response2 = docs.request(docs.extractIds(response))
