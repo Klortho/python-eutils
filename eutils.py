@@ -1,4 +1,4 @@
-# eutils package
+# eutils module
 
 import requests
 from lxml import etree
