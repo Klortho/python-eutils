@@ -6,5 +6,5 @@ setup(
     url='',
     author='Klortho',
     author_email='voldrani@gmail.com',
-    packages = ['eutils'],
+    py_modules=['applog'],
 )
