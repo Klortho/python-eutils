@@ -3,6 +3,7 @@
 import requests
 from lxml import etree
 
+__version__ = '0.1.1'
 _eutils_base = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
 
 
