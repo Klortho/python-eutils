@@ -19,6 +19,11 @@ def esearch(db, term):
 
     return ids
 
+class DocumentSummary(object):
+    xml = None
+    def __init__(self, xml):
+        self.xml = xml
+
 def esummary(db, id):
     response = requests.get(_eutils_base + 'esummary.fcgi',
                             params={
@@ -27,4 +32,4 @@ def esummary(db, id):
                                  "version": "2.0"
                             })
 
-    return response.content
+    return DocumentSummary(response.content)
