@@ -19,12 +19,21 @@ def esearch(db, term):
 
     return ids
 
+class SummaryNotFoundException(Exception):
+    pass
+
 class DocumentSummary(object):
     xml = None
     def __init__(self, xml):
         self.xml = xml
+        tree = etree.XML(xml)
+        if len(tree.xpath('//DocumentSummary')) == 0:
+            raise SummaryNotFoundException
 
 def esummary(db, id):
+    """
+    This takes a single id and returns the results for the first record in the resulting docsum set.
+    """
     response = requests.get(_eutils_base + 'esummary.fcgi',
                             params={
                                 'db': db,
