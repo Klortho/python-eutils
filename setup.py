@@ -6,7 +6,7 @@ setup(
     url='https://stash.ncbi.nlm.nih.gov/projects/WT/repos/python-eutils',
     author='Klortho',
     author_email='voldrani@gmail.com',
-    py_modules=[
+    packages=[
         'eutils',
     ],
     requires=['requests']
