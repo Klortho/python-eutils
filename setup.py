@@ -9,4 +9,5 @@ setup(
     py_modules=[
         'eutils',
     ],
+    requires=['requests']
 )
