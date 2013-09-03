@@ -1,4 +1,5 @@
-from eutils import DocumentSummary, requests, _eutils_base
+from base import DocumentSummary, requests, _eutils_base
+from base import esummary as base_esummary
 from lxml import etree
 
 class BiosampleDocumentSummary(DocumentSummary):
@@ -21,11 +22,4 @@ class BiosampleDocumentSummary(DocumentSummary):
 
 
 def esummary(id):
-    response = requests.get(_eutils_base + 'esummary.fcgi',
-                            params={
-                                'db': "biosample",
-                                 'id': id,
-                                 "version": "2.0"
-                            })
-
-    return BiosampleDocumentSummary(response.content)
+    return base_esummary("biosample", id, BiosampleDocumentSummary)

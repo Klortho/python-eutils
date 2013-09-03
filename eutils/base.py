@@ -30,7 +30,7 @@ class DocumentSummary(object):
         if len(tree.xpath('//DocumentSummary')) == 0:
             raise SummaryNotFoundException
 
-def esummary(db, id):
+def esummary(db, id, docsum_class=DocumentSummary):
     """
     This takes a single id and returns the results for the first record in the resulting docsum set.
     """
@@ -41,4 +41,4 @@ def esummary(db, id):
                                  "version": "2.0"
                             })
 
-    return DocumentSummary(response.content)
+    return docsum_class(response.content)
