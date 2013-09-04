@@ -45,7 +45,8 @@ def esummary(db, id, docsum_class=DocumentSummary):
                                  "version": "2.0"
                             })
     tree = etree.XML(response.content)
-    if len(tree.xpath('//DocumentSummary')) == 0:
+    docsums = tree.xpath('//DocumentSummary')
+    # TODO: Allow returning multiple docsums
+    if len(docsums) == 0:
         raise SummaryNotFoundException
-    
-    return docsum_class(tree)
+    return docsum_class(docsums[0])
