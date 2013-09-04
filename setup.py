@@ -9,5 +9,5 @@ setup(
     packages=[
         'eutils',
     ],
-    requires=['requests']
+    install_requires=['requests']
 )
