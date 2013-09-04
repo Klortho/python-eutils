@@ -7,9 +7,8 @@ class BiosampleDocumentSummary(DocumentSummary):
     sample_name = None
     def __init__(self, xml):
         super(BiosampleDocumentSummary, self).__init__(xml)
-        tree = etree.XML(xml)
 
-        sample_data = tree.xpath("//SampleData")
+        sample_data = xml.xpath("//SampleData")
         if len(sample_data) > 0:
             sample_data = sample_data[0].text
             sd_tree = etree.XML(sample_data)

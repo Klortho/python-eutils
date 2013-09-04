@@ -23,12 +23,16 @@ class SummaryNotFoundException(Exception):
     pass
 
 class DocumentSummary(object):
+    """
+    The DocumentSummary class is a base class that can be
+    extended by modules to add data specific to databases
+    (such as SRA titles). It just contains a variable, xml,
+    that contains a parsed xml tree. Other variables will be
+    added by subclasses.
+    """
     xml = None
     def __init__(self, xml):
         self.xml = xml
-        tree = etree.XML(xml)
-        if len(tree.xpath('//DocumentSummary')) == 0:
-            raise SummaryNotFoundException
 
 def esummary(db, id, docsum_class=DocumentSummary):
     """
@@ -40,5 +44,8 @@ def esummary(db, id, docsum_class=DocumentSummary):
                                  'id': id,
                                  "version": "2.0"
                             })
-
-    return docsum_class(response.content)
+    tree = etree.XML(response.content)
+    if len(tree.xpath('//DocumentSummary')) == 0:
+        raise SummaryNotFoundException
+    
+    return docsum_class(tree)
