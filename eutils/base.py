@@ -30,6 +30,7 @@ class DocumentSummary(object):
         if len(tree.xpath('//DocumentSummary')) == 0:
             raise SummaryNotFoundException
 
+
 def esummary(db, id, docsum_class=DocumentSummary):
     """
     This takes a single id and returns the results for the first record in the resulting docsum set.
@@ -40,5 +41,21 @@ def esummary(db, id, docsum_class=DocumentSummary):
                                  'id': id,
                                  "version": "2.0"
                             })
+
+    return docsum_class(response.content)
+
+
+def elink(db, id, linkname):
+    """
+    This takes a single id and returns the results for the first record in the resulting docsum set.
+    """
+    response = requests.get(_eutils_base + 'elink.fcgi',
+                            params={
+                                'db': db,
+                                'id': id,
+                                'linkname': linkname,
+                                "version": "2.0"
+                            })
+    print response.content
 
     return docsum_class(response.content)
