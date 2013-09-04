@@ -1,7 +1,6 @@
 # eutils module
 
 import requests
-import logging
 from lxml import etree
 
 __version__ = '0.2.1'
