@@ -34,6 +34,7 @@ class DocumentSummary(object):
     def __init__(self, xml):
         self.xml = xml
 
+
 def esummary(db, id, docsum_class=DocumentSummary):
     """
     This takes a single id and returns the results for the first record in the resulting docsum set.
@@ -44,9 +45,23 @@ def esummary(db, id, docsum_class=DocumentSummary):
                                  'id': id,
                                  "version": "2.0"
                             })
+    
     tree = etree.XML(response.content)
     docsums = tree.xpath('//DocumentSummary')
+
     # TODO: Allow returning multiple docsums
     if len(docsums) == 0:
         raise SummaryNotFoundException
     return docsum_class(docsums[0])
+
+
+def elink(db, id, linkname):
+    response = requests.get(_eutils_base + 'elink.fcgi',
+                            params={
+                                'db': db,
+                                'id': id,
+                                'linkname': linkname,
+                                "version": "2.0"
+                            })
+
+    return etree.XML(response.content)
