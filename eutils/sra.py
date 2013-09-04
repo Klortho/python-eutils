@@ -6,8 +6,7 @@ class SRADocumentSummary(DocumentSummary):
     title = None
     def __init__(self, xml):
         super(SRADocumentSummary, self).__init__(xml)
-        tree = etree.XML(xml)
-        exp_xml = tree.xpath("//ExpXml")
+        exp_xml = xml.xpath("//ExpXml")
         if len(exp_xml) > 0:
             text = exp_xml[0].text
             tree2 = etree.XML("<div>" + text + "</div>")

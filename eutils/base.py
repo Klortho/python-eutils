@@ -1,6 +1,7 @@
 # eutils module
 
 import requests
+import logging
 from lxml import etree
 
 __version__ = '0.2.1'
@@ -23,12 +24,16 @@ class SummaryNotFoundException(Exception):
     pass
 
 class DocumentSummary(object):
+    """
+    The DocumentSummary class is a base class that can be
+    extended by modules to add data specific to databases
+    (such as SRA titles). It just contains a variable, xml,
+    that contains a parsed xml tree. Other variables will be
+    added by subclasses.
+    """
     xml = None
     def __init__(self, xml):
         self.xml = xml
-        tree = etree.XML(xml)
-        if len(tree.xpath('//DocumentSummary')) == 0:
-            raise SummaryNotFoundException
 
 
 def esummary(db, id, docsum_class=DocumentSummary):
@@ -41,14 +46,17 @@ def esummary(db, id, docsum_class=DocumentSummary):
                                  'id': id,
                                  "version": "2.0"
                             })
+    
+    tree = etree.XML(response.content)
+    docsums = tree.xpath('//DocumentSummary')
 
-    return docsum_class(response.content)
+    # TODO: Allow returning multiple docsums
+    if len(docsums) == 0:
+        raise SummaryNotFoundException
+    return docsum_class(docsums[0])
 
 
 def elink(db, id, linkname):
-    """
-    This takes a single id and returns the results for the first record in the resulting docsum set.
-    """
     response = requests.get(_eutils_base + 'elink.fcgi',
                             params={
                                 'db': db,
@@ -56,6 +64,5 @@ def elink(db, id, linkname):
                                 'linkname': linkname,
                                 "version": "2.0"
                             })
-    print response.content
 
-    return docsum_class(response.content)
+    return etree.XML(response.content)
